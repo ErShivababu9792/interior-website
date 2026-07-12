@@ -4,8 +4,9 @@ export default function LoginForm({ onLogin, onForgotClick }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setError("");
 
@@ -14,7 +15,10 @@ export default function LoginForm({ onLogin, onForgotClick }) {
       return;
     }
 
-    const result = onLogin(email.trim(), password);
+    setLoading(true);
+    const result = await onLogin(email.trim(), password);
+    setLoading(false);
+
     if (!result.success) {
       setError(result.message);
     }
@@ -41,7 +45,9 @@ export default function LoginForm({ onLogin, onForgotClick }) {
         />
         <span className="err">{error}</span>
       </div>
-      <button type="submit" className="btn-primary">Log in</button>
+      <button type="submit" className="btn-primary" disabled={loading}>
+        {loading ? "Logging in..." : "Log in"}
+      </button>
       <button type="button" className="link-btn" onClick={onForgotClick}>
         Forgot password?
       </button>

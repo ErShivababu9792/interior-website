@@ -2,23 +2,25 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-const STORAGE_KEY = "shiva_projects";
 const INITIAL_COUNT = 4;
-
-const defaultProjects = [
-  { id: "d1", title: "Aranya Residence", category: "Residential — Living & Dining", dims: "840 sq.ft", color: "#D9CBAE", images: [], description: "A full home makeover focused on natural light and open-plan living for a family of four." },
-  { id: "d2", title: "Studio Loft 4B", category: "Residential — Compact Living", dims: "560 sq.ft", color: "#B7C4B0", images: [], description: "Smart storage and multi-purpose furniture for a compact single-occupant loft." },
-  { id: "d3", title: "Kavya's Kitchen", category: "Residential — Kitchen Remodel", dims: "210 sq.ft", color: "#C9B7A8", images: [], description: "A galley kitchen remodel with better workflow between the stove, sink, and storage." },
-  { id: "d4", title: "Northgate Co-work", category: "Commercial — Workspace", dims: "1,240 sq.ft", color: "#AEBAC6", images: [], description: "An open co-working space balancing focus zones with informal meeting areas." },
-];
+const API_URL = "https://shiva-design-backend.onrender.com";
 
 export default function Portfolio() {
   const [projects, setProjects] = useState([]);
   const [showAll, setShowAll] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    setProjects(saved ? JSON.parse(saved) : defaultProjects);
+    fetch(API_URL)
+      .then((res) => res.json())
+      .then((data) => {
+        setProjects(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch projects:", err);
+        setLoading(false);
+      });
   }, []);
 
   const visibleProjects = showAll ? projects : projects.slice(0, INITIAL_COUNT);
@@ -32,7 +34,9 @@ export default function Portfolio() {
         <span className="rule"></span>
       </div>
 
-      {projects.length === 0 ? (
+      {loading ? (
+        <div className="empty-note">Loading projects...</div>
+      ) : projects.length === 0 ? (
         <div className="empty-note">No projects added yet.</div>
       ) : (
         <>
@@ -47,7 +51,7 @@ export default function Portfolio() {
                       style={
                         cover
                           ? { backgroundImage: `url('${cover}')`, backgroundSize: "cover", backgroundPosition: "center" }
-                          : { background: p.color || "#C9B7A8" }
+                          : { background: "#C9B7A8" }
                       }
                     ></div>
                     <div className="work-meta">

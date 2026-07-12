@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 
+const CONTACT_API_URL = "https://shiva-design-backend.onrender.com";
+
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState({});
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [serverError, setServerError] = useState("");
 
   function validate() {
     const newErrors = {};
@@ -16,17 +19,29 @@ export default function Contact() {
     return Object.keys(newErrors).length === 0;
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    setServerError("");
     if (!validate()) return;
 
     setSending(true);
 
-    setTimeout(() => {
+    try {
+      const res = await fetch(CONTACT_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) throw new Error("Failed to send");
+
       setSending(false);
       setSent(true);
       setForm({ name: "", email: "", message: "" });
-    }, 900);
+    } catch (err) {
+      setSending(false);
+      setServerError("Could not send message. Please try again.");
+    }
   }
 
   return (
@@ -43,7 +58,7 @@ export default function Contact() {
       <div className="contact-info">
         <div>
           Call
-          <span>+91 9140256355</span>
+          <span>+91 98765 43210</span>
         </div>
         <div>
           Email
@@ -92,6 +107,8 @@ export default function Contact() {
         <button type="submit" disabled={sending}>
           {sending ? "Sending..." : "Send message"}
         </button>
+
+        {serverError && <div className="err" style={{ marginTop: 10 }}>{serverError}</div>}
 
         {sent && (
           <div className="success-msg">

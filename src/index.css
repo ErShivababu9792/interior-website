@@ -1286,3 +1286,30 @@ body {
   justify-content: center;
   cursor: pointer;
 }
+
+.admin-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 30px;
+  background: #262320;
+}
+
+.admin-tabs button {
+  background: #fff;
+  border: none;
+  padding: 14px 24px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  color: #5C574E;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-tabs button.tab-active {
+  background: #AD8348;
+  color: #fff;
+}

@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+const API_URL = "https://shiva-design-backend.onrender.com";
 
 export default function Testimonials() {
-  const testimonials = [
-    { quote: "They planned around our actual daily routine, not just how the room looked in photos.", who: "Residential client, Bengaluru" },
-    { quote: "The 3D walkthrough caught a layout issue before we'd spent a rupee on it.", who: "Studio owner, Indiranagar" },
-    { quote: "Clear pricing, no surprise costs mid-project. That mattered more than the design itself.", who: "Office client, HSR Layout" },
-  ];
+  const [testimonials, setTestimonials] = useState([]);
+
+  useEffect(() => {
+    fetch(API_URL)
+      .then((res) => res.json())
+      .then((data) => setTestimonials(data))
+      .catch((err) => console.error("Failed to load testimonials:", err));
+  }, []);
+
+  if (testimonials.length === 0) return null;
 
   return (
     <section className="section" style={{ paddingTop: 0 }}>
@@ -16,8 +23,8 @@ export default function Testimonials() {
       </div>
 
       <div className="testimonial-grid">
-        {testimonials.map((t, i) => (
-          <div key={i} className="testimonial">
+        {testimonials.map((t) => (
+          <div key={t.id} className="testimonial">
             <p>"{t.quote}"</p>
             <div className="who">— {t.who}</div>
           </div>
