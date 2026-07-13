@@ -58,7 +58,7 @@ export default function Contact() {
       <div className="contact-info">
         <div>
           Call
-          <span>+91 98765 43210</span>
+          <span>+91 9140256355</span>
         </div>
         <div>
           Email
