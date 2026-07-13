@@ -4,10 +4,10 @@ import LoginForm from "./LoginForm";
 import ForgotPassword from "./ForgotPassword";
 
 const SESSION_KEY = "shiva_admin_session";
-const PROJECTS_API = "https://shiva-design-backend.onrender.com";
-const LOGIN_URL = "https://shiva-design-backend.onrender.com";
-const TESTIMONIALS_API = "https://shiva-design-backend.onrender.com";
-const CONTACT_API = "https://shiva-design-backend.onrender.com";
+const PROJECTS_API = "https://shiva-design-backend.onrender.com/api/projects";
+const LOGIN_URL = "https://shiva-design-backend.onrender.com/api/login";
+const TESTIMONIALS_API = "https://shiva-design-backend.onrender.com/api/testimonials";
+const CONTACT_API = "https://shiva-design-backend.onrender.com/api/contact";
 
 export default function AdminPanel() {
   const [view, setView] = useState("login");

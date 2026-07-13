@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const CONTACT_API_URL = "https://shiva-design-backend.onrender.com";
+const CONTACT_API_URL = "https://shiva-design-backend.onrender.com/api/contact";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });

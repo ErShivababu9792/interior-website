@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
 const INITIAL_COUNT = 4;
-const API_URL = "https://shiva-design-backend.onrender.com";
+const API_URL = "https://shiva-design-backend.onrender.com/api/projects";
 
 export default function Portfolio() {
   const [projects, setProjects] = useState([]);

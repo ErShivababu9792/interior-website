@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const API_URL = "https://shiva-design-backend.onrender.com";
+const API_URL = "https://shiva-design-backend.onrender.com/api/testimonials";
 
 export default function Testimonials() {
   const [testimonials, setTestimonials] = useState([]);
